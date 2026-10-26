@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{--bg:#0c1024;--panel:rgba(255,255,255,.075);--line:rgba(255,255,255,.13);--text:#f5f6ff;--muted:#a9b0d0;--accent:#8b7cff;--cyan:#53e5d5;--pink:#ff83bc}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 10% 0%,#27265b,transparent 38%),radial-gradient(ellipse at 100% 25%,#123b50,transparent 32%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+.wrap{width:min(1080px,93%);margin:auto;padding:26px 0 40px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;gap:10px}.brand{font-size:20px;font-weight:900}.logo{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:13px;background:linear-gradient(135deg,var(--accent),var(--cyan));color:#10152b;margin-right:8px}.tag{font-size:11px;border:1px solid var(--line);padding:8px 12px;border-radius:99px;color:#dce1ff}
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.card{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(15px);border-radius:25px;padding:clamp(20px,4vw,36px);box-shadow:0 18px 60px #0002}.eyebrow{color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase}h1{font-size:clamp(34px,5vw,55px);line-height:1.04;letter-spacing:-1.7px;margin:16px 0}h1 span{color:var(--cyan)}p{color:var(--muted);line-height:1.65}.clock{font-size:clamp(34px,4vw,48px);font-weight:900;font-variant-numeric:tabular-nums;margin:10px 0}.next{margin-top:18px;background:#ffffff0a;border:1px solid var(--line);border-radius:16px;padding:14px}.next small{display:block;color:var(--muted);margin-bottom:5px}.next strong{font-size:17px}.next span{display:block;color:var(--cyan);font-size:12px;margin-top:5px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:30px 0 15px}.head h2{margin:0;font-size:23px}.head p{margin:5px 0 0;font-size:13px}.chip{font-size:12px;border:1px solid #53e5d55a;color:var(--cyan);padding:9px 12px;border-radius:99px;white-space:nowrap}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:16px}.tab{background:#ffffff08;border:1px solid var(--line);border-radius:15px;padding:14px 5px;color:var(--muted);cursor:pointer;font:inherit}.tab b{display:block;color:var(--text);font-size:14px}.tab small{font-size:10px}.tab.active{border-color:#a69bff;background:linear-gradient(135deg,#8b7cff38,#53e5d51c)}.main{display:grid;grid-template-columns:1.5fr .7fr;gap:17px}.schedule,.aside{border:1px solid var(--line);background:var(--panel);border-radius:23px;padding:22px}.panelhead{display:flex;justify-content:space-between;gap:10px;margin-bottom:17px}.panelhead h3,.aside h3{margin:0}.panelhead span{color:var(--muted);font-size:12px}.lesson{display:grid;grid-template-columns:92px 5px 1fr auto;align-items:center;gap:13px;padding:15px;margin-bottom:10px;border:1px solid var(--line);border-radius:16px;background:#ffffff05}.time{font-size:12px;color:var(--muted)}.time b{display:block;color:white;font-size:13px;margin-bottom:4px}.stripe{height:42px;border-radius:8px;background:var(--c)}.subject{font-weight:800}.subject small{display:block;color:var(--muted);font-size:11px;margin-top:5px;font-weight:500}.period{font-size:10px;color:#dfe2ff;border:1px solid var(--line);border-radius:8px;padding:7px;white-space:nowrap}.lesson.current{border-color:#53e5d58a;background:#53e5d50d}.lesson.current .period{color:var(--cyan)}.aside{align-self:start}.summary{display:grid;gap:14px;margin-top:17px}.sumrow{display:flex;gap:10px;align-items:center}.ico{width:34px;height:34px;border-radius:11px;background:#ffffff0c;display:grid;place-items:center}.sumtxt{flex:1}.sumtxt b{display:block;font-size:12px}.sumtxt small{font-size:11px;color:var(--muted)}.num{color:var(--cyan);font-weight:800}.tip{margin-top:16px;background:linear-gradient(135deg,#8b7cff18,#ff83bc10)}.tip p{font-size:13px;margin-bottom:0}.footer{text-align:center;color:#7f87ac;font-size:11px;margin-top:25px}.footer span{color:var(--cyan)}.loading{padding:24px;text-align:center;color:var(--muted)}
+@media(max-width:760px){.hero,.main{grid-template-columns:1fr}.hero .card{padding:23px}.aside{margin-top:0}}@media(max-width:500px){.wrap{width:95%;padding-top:17px}.tag{font-size:9px}.tabs{gap:5px}.tab{padding:12px 2px}.tab b{font-size:12px}.schedule,.aside{padding:14px}.lesson{grid-template-columns:75px 4px 1fr;gap:9px;padding:12px}.period{grid-column:3;justify-self:start}.head h2{font-size:20px}}
+/* ===== ANIMASI PEMBUKA CLASSFLOW ===== */
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at center, #202650 0%, #10152b 48%, #070a16 100%);
+  color: white;
+  font-family: Arial, sans-serif;
+  animation: introExit 0.8s ease 3.2s forwards;
+}
+
+.intro-glow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  background: #8b7cff;
+  filter: blur(100px);
+  opacity: 0.45;
+  animation: glowPulse 2s ease-in-out infinite alternate;
+}
+
+.intro-logo {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  font-size: 42px;
+  background: linear-gradient(135deg, #a69bff, #53e5d5);
+  color: #10152b;
+  box-shadow: 0 0 45px #8b7cff70;
+  animation: logoEnter 1s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.intro-title {
+  margin-top: 25px;
+  font-size: clamp(35px, 8vw, 55px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: linear-gradient(90deg, #c2baff, #53e5d5);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: textEnter 0.9s ease 0.4s both;
+}
+
+.intro-subtitle {
+  margin-top: 12px;
+  color: #c4cbea;
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-align: center;
+  animation: textEnter 0.9s ease 0.8s both;
+}
+
+.intro-loader {
+  width: 145px;
+  height: 4px;
+  margin-top: 35px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ffffff20;
+  animation: textEnter 0.6s ease 1s both;
+}
+
+.intro-loader::after {
+  content: "";
+  display: block;
+  width: 40%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #a69bff, #53e5d5);
+  animation: loaderMove 1.4s ease-in-out infinite;
+}
+
+@keyframes logoEnter {
+  from { opacity: 0; transform: scale(.35) rotate(-18deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes textEnter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glowPulse {
+  from { transform: scale(.8); opacity: .25; }
+  to { transform: scale(1.25); opacity: .55; }
+}
+
+@keyframes loaderMove {
+  from { transform: translateX(-120%); }
+  to { transform: translateX(370%); }
+}
+
+@keyframes introExit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #intro-screen,
+  .intro-logo,
+  .intro-title,
+  .intro-subtitle,
+  .intro-loader,
+  .intro-glow {
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ===== CLASSFLOW MOTION PACK: intro -> main menu + micro-interactions ===== */
+:root{scroll-behavior:smooth}
+body{overflow-x:hidden}
+body::before,body::after{content:"";position:fixed;pointer-events:none;z-index:-1;border-radius:50%;filter:blur(1px);opacity:.35}
+body::before{width:260px;height:260px;left:-100px;top:28%;background:radial-gradient(circle,#8b7cff 0%,transparent 70%);animation:ambientFloat 12s ease-in-out infinite alternate}
+body::after{width:300px;height:300px;right:-120px;bottom:5%;background:radial-gradient(circle,#53e5d5 0%,transparent 70%);animation:ambientFloat 15s ease-in-out infinite alternate-reverse}
+/* Intro finishing transition */
+#intro-screen{animation:introExit .9s cubic-bezier(.7,0,.2,1) 3.45s forwards}
+#intro-screen::before{content:"";position:absolute;inset:-30%;border:1px solid #a69bff35;border-radius:50%;box-shadow:0 0 0 40px #8b7cff08,0 0 0 90px #53e5d508;animation:orbitRings 4s linear infinite}
+#intro-screen::after{content:"✦  ✧  ·  ✦  ·  ✧";position:absolute;bottom:14%;font-size:14px;letter-spacing:15px;color:#d7d1ff;opacity:.75;animation:starBlink 1.5s ease-in-out infinite alternate}
+.intro-logo{animation:logoEnter 1s cubic-bezier(.2,.8,.2,1) both, logoHover 2.2s ease-in-out 1s infinite}
+.intro-glow{animation:glowPulse 2s ease-in-out infinite alternate, glowSpin 8s linear infinite}
+.intro-title{text-shadow:0 0 32px #8b7cff35}
+.intro-loader::before{content:"";position:absolute}
+
+.intro-particles{position:absolute;inset:0;pointer-events:none;color:#dcd7ff}.intro-particles i{position:absolute;font-style:normal;animation:particleDrift 4s ease-in-out infinite}.intro-particles i:nth-child(1){left:18%;top:24%;font-size:22px;animation-delay:-.3s}.intro-particles i:nth-child(2){left:77%;top:22%;font-size:27px;animation-delay:-1.2s}.intro-particles i:nth-child(3){left:25%;top:68%;font-size:28px;animation-delay:-2s}.intro-particles i:nth-child(4){left:82%;top:67%;font-size:19px;animation-delay:-.7s}.intro-particles i:nth-child(5){left:12%;top:49%;font-size:16px;animation-delay:-2.5s}.intro-particles i:nth-child(6){left:70%;top:47%;font-size:25px;animation-delay:-1.8s}.intro-particles i:nth-child(7){left:43%;top:17%;font-size:14px;animation-delay:-1s}.intro-particles i:nth-child(8){left:58%;top:78%;font-size:21px;animation-delay:-3s}
+@keyframes particleDrift{0%,100%{opacity:.25;transform:translateY(10px) rotate(0) scale(.8)}50%{opacity:1;transform:translateY(-16px) rotate(35deg) scale(1.15)}}
+
+/* Main screen reveals after the intro curtain */
+.wrap{opacity:0;transform:translateY(18px) scale(.985);animation:mainReveal 1.15s cubic-bezier(.16,1,.3,1) 3.7s forwards}
+.top{animation:slideDown .8s cubic-bezier(.16,1,.3,1) 3.95s both}
+.hero .card:first-child{animation:cardReveal .9s cubic-bezier(.16,1,.3,1) 4.05s both}
+.hero .card:last-child{animation:cardReveal .9s cubic-bezier(.16,1,.3,1) 4.2s both}
+.head{animation:slideUp .75s ease 4.25s both}
+.tabs .tab{animation:tabPop .55s cubic-bezier(.2,.9,.2,1) both}
+.tabs .tab:nth-child(1){animation-delay:4.28s}.tabs .tab:nth-child(2){animation-delay:4.36s}.tabs .tab:nth-child(3){animation-delay:4.44s}.tabs .tab:nth-child(4){animation-delay:4.52s}.tabs .tab:nth-child(5){animation-delay:4.60s}
+.schedule{animation:slideUp .8s ease 4.4s both}.aside{animation:slideRight .8s ease 4.52s both}.tip{animation-delay:4.65s}.footer{animation:fadeIn 1s ease 4.75s both}
+.card,.schedule,.aside,.tab,.lesson,.next,.chip,.logo{transition:transform .28s ease, border-color .28s ease, box-shadow .28s ease, background .28s ease}
+.card:hover{transform:translateY(-4px);border-color:#a69bff65;box-shadow:0 22px 70px #0003,0 0 28px #8b7cff0c}
+.tab{position:relative;overflow:hidden;isolation:isolate}.tab::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent,#ffffff20,transparent);transform:translateX(-120%);transition:transform .55s ease;z-index:-1}.tab:hover::after{transform:translateX(120%)}.tab:hover{transform:translateY(-3px);border-color:#8b7cff9c}.tab:active{transform:scale(.96)}
+.tab.active{box-shadow:0 7px 24px #8b7cff18;animation:activeGlow 2.4s ease-in-out infinite}
+.lesson{animation:lessonEnter .55s cubic-bezier(.16,1,.3,1) both;transform-origin:left center}.lesson:nth-child(1){animation-delay:.03s}.lesson:nth-child(2){animation-delay:.10s}.lesson:nth-child(3){animation-delay:.17s}.lesson:nth-child(4){animation-delay:.24s}.lesson:nth-child(5){animation-delay:.31s}.lesson:hover{transform:translateX(5px);border-color:#53e5d580;background:#ffffff0b}.lesson.current{animation:currentPulse 2.5s ease-in-out infinite}
+.stripe{position:relative;overflow:hidden}.stripe::after{content:"";position:absolute;inset:-100% -50%;background:linear-gradient(90deg,transparent,#ffffff55,transparent);transform:rotate(25deg) translateX(-160%);animation:stripeShine 3.5s ease-in-out infinite}
+.next{animation:nextFloat 4s ease-in-out infinite}.ico{transition:transform .3s ease}.sumrow:hover .ico{transform:rotate(-8deg) scale(1.12)}.sumrow:hover .num{animation:numberPop .35s ease}
+.logo{animation:logoHover 4s ease-in-out infinite}.chip{animation:chipGlow 3s ease-in-out infinite}.clock{text-shadow:0 0 24px #53e5d51a;transition:letter-spacing .3s ease}.clock:hover{letter-spacing:2px}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+@keyframes ambientFloat{from{transform:translate3d(0,-15px,0) scale(.9)}to{transform:translate3d(30px,25px,0) scale(1.12)}}
+@keyframes orbitRings{to{transform:rotate(360deg)}}@keyframes glowSpin{to{filter:blur(105px) hue-rotate(35deg)}}@keyframes starBlink{from{opacity:.25;transform:translateY(0)}to{opacity:.9;transform:translateY(-7px)}}
+@keyframes logoHover{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(3deg)}}
+@keyframes mainReveal{to{opacity:1;transform:translateY(0) scale(1)}}@keyframes slideDown{from{opacity:0;transform:translateY(-22px)}to{opacity:1;transform:translateY(0)}}@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}@keyframes slideRight{from{opacity:0;transform:translateX(25px)}to{opacity:1;transform:translateX(0)}}@keyframes cardReveal{from{opacity:0;transform:translateY(25px) scale(.97);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}@keyframes tabPop{from{opacity:0;transform:translateY(16px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes lessonEnter{from{opacity:0;transform:translateX(-18px) scale(.98)}to{opacity:1;transform:translateX(0) scale(1)}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes activeGlow{0%,100%{box-shadow:0 7px 24px #8b7cff18}50%{box-shadow:0 7px 28px #8b7cff35}}@keyframes currentPulse{0%,100%{box-shadow:0 0 0 0 #53e5d500}50%{box-shadow:0 0 0 4px #53e5d510}}@keyframes stripeShine{0%,55%{transform:rotate(25deg) translateX(-160%)}80%,100%{transform:rotate(25deg) translateX(160%)}}@keyframes nextFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@keyframes numberPop{50%{transform:scale(1.25)}}@keyframes chipGlow{0%,100%{box-shadow:0 0 0 #53e5d500}50%{box-shadow:0 0 18px #53e5d514}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* ===== ANIMASI TAMBAHAN: TRANSISI, PARTIKEL, RIPPLE, DAN REVEAL ===== */
+#intro-screen{transform-origin:center;will-change:opacity,transform,clip-path;animation:introCurtain 1.05s cubic-bezier(.76,0,.24,1) 3.45s forwards}
+#intro-screen .intro-title{animation:titleShimmer 2.2s ease-in-out .6s infinite alternate}
+#intro-screen .intro-subtitle{animation:subtitleRise .9s ease .55s both}
+#intro-screen .intro-loader{box-shadow:0 0 24px #53e5d566}
+#intro-screen .intro-loader::after{box-shadow:0 0 18px #53e5d5}
+body{background-attachment:fixed}
+.wrap{perspective:1200px}
+.brand .logo{position:relative;isolation:isolate;overflow:hidden}
+.brand .logo::after{content:"";position:absolute;inset:-80%;background:linear-gradient(110deg,transparent 42%,#ffffff9c 50%,transparent 58%);transform:translateX(-65%) rotate(15deg);animation:logoShine 4s ease-in-out infinite}
+.hero .card{position:relative;overflow:hidden;isolation:isolate}
+.hero .card::before,.schedule::before,.aside::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,transparent 20%,#ffffff07 48%,transparent 72%);transform:translateX(-120%);animation:panelSweep 8s ease-in-out infinite}
+.hero .card:last-child::before{animation-delay:2s}
+.head h2{position:relative;display:inline-block}
+.head h2::after{content:"";display:block;height:2px;width:38%;margin-top:7px;border-radius:5px;background:linear-gradient(90deg,var(--cyan),transparent);animation:underlineGrow 1s ease 4.4s both}
+.tab.active{position:relative;overflow:hidden}
+.tab.active::before{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;background:#53e5d5;opacity:0;transform:translate(-50%,-50%) scale(1);animation:tabRipple 1.8s ease-out infinite;pointer-events:none}
+.lesson{position:relative;overflow:hidden}
+.lesson::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--cyan),var(--pink));transform:scaleY(0);transform-origin:top;transition:transform .35s ease}
+.lesson:hover::after{transform:scaleY(1)}
+.sumrow{padding:6px;border-radius:12px;transition:background .3s ease,transform .3s ease}
+.sumrow:hover{background:#ffffff09;transform:translateX(4px)}
+.next{position:relative;overflow:hidden}
+.next::after{content:"✦";position:absolute;right:14px;top:10px;color:#53e5d5;opacity:.6;animation:starOrbit 5s linear infinite}
+#transition-flash{position:fixed;inset:0;z-index:99998;pointer-events:none;opacity:0;background:radial-gradient(circle at var(--x,50%) var(--y,50%),#8b7cff55,transparent 42%)}
+#floating-sparkles{position:fixed;inset:0;pointer-events:none;z-index:99997;overflow:hidden}
+.sparkle{position:absolute;left:var(--x);top:var(--y);color:var(--spark-color,#53e5d5);font-size:var(--size,14px);opacity:0;animation:sparklePop .8s ease-out forwards;text-shadow:0 0 12px currentColor}
+.ripple{position:absolute;border-radius:50%;pointer-events:none;background:#53e5d538;transform:scale(0);animation:rippleExpand .65s ease-out forwards}
+@keyframes introCurtain{0%{opacity:1;visibility:visible;transform:scale(1);clip-path:inset(0 0 0 0 round 0)}55%{opacity:1;transform:scale(1.04);clip-path:inset(4% 3% 4% 3% round 32px)}100%{opacity:0;visibility:hidden;transform:scale(1.12);clip-path:inset(50% 0 50% 0 round 50px);pointer-events:none}}
+@keyframes titleShimmer{from{text-shadow:0 0 8px #8b7cff40;letter-spacing:-2px}to{text-shadow:0 0 28px #53e5d580,0 0 50px #8b7cff35;letter-spacing:1px}}
+@keyframes subtitleRise{from{opacity:0;transform:translateY(12px);letter-spacing:5px}to{opacity:1;transform:translateY(0);letter-spacing:2px}}
+@keyframes logoShine{0%,65%{transform:translateX(-70%) rotate(15deg)}100%{transform:translateX(70%) rotate(15deg)}}
+@keyframes panelSweep{0%,72%,100%{transform:translateX(-120%)}86%{transform:translateX(120%)}}
+@keyframes underlineGrow{from{width:0;opacity:0}to{width:38%;opacity:1}}
+@keyframes tabRipple{0%{opacity:.25;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(17)}}
+@keyframes starOrbit{0%{transform:rotate(0) scale(.8)}50%{transform:rotate(180deg) scale(1.2)}100%{transform:rotate(360deg) scale(.8)}}
+@keyframes sparklePop{0%{opacity:0;transform:translateY(8px) scale(.2) rotate(0)}20%{opacity:1}100%{opacity:0;transform:translateY(-28px) scale(1.2) rotate(90deg)}}
+@keyframes rippleExpand{to{transform:scale(1);opacity:0}}
+@media(prefers-reduced-motion:reduce){#intro-screen,.intro-title,.intro-subtitle,.brand .logo::after,.hero .card::before,.schedule::before,.aside::before,.head h2::after,.tab.active::before,.next::after{animation:none!important}.wrap{opacity:1!important;transform:none!important}}
+
+</style>
+</head>
+<body>
+  <!-- PEMBUKA CLASSFLOW -->
+  <div id="intro-screen">
+    <div class="intro-glow"></div>
+    <div class="intro-particles" aria-hidden="true"><i>✦</i><i>✧</i><i>·</i><i>✦</i><i>✧</i><i>·</i><i>✦</i><i>✧</i></div>
+    <div class="intro-logo">📚</div>
+    <div class="intro-title">ClassFlow</div>
+    <div class="intro-subtitle">JADWAL PELAJARAN DIGITAL</div>
+    <div class="intro-loader"></div>
+  </div>
+
+  <div class="wrap">
+<header class="top"><div class="brand"><span class="logo">✦</span>ClassFlow<span style="color:var(--cyan)">.</span></div><div class="tag">✧ YOUR DIGITAL CLASSROOM</div></header>
+<section class="hero"><div class="card"><div class="eyebrow">● Belajar lebih teratur</div><h1>Atur hari,<br><span>raih prestasi.</span></h1><p>Semua jadwal pelajaranmu dalam satu tempat. Pilih hari, cek jam pelajaran, dan siap menghadapi kelas dengan percaya diri!</p></div>
+<div class="card"><div style="color:var(--muted);font-size:13px">Waktu sekarang</div><div class="clock" id="clock">00:00:00</div><div id="date" style="font-size:13px;color:#d9ddfa"></div><div class="next"><small id="nextlabel">✨ Pengingat hari ini</small><strong id="nextsubject">Memuat jadwal...</strong><span id="nexttime">Tunggu sebentar</span></div></div></section>
+<div class="head"><div><h2>Jadwal Mapel Kelas X TKJ 1</h2><p>Pilih hari untuk melihat daftar kelasmu.</p></div><div class="chip" id="today">● Hari ini</div></div>
+<nav class="tabs" id="tabs"></nav>
+<div class="main"><section class="schedule"><div class="panelhead"><h3 id="daytitle">Senin</h3><span id="count"></span></div><div id="lessons" class="loading">Pilih hari untuk melihat jadwal pelajaran.</div></section>
+<aside><section class="aside"><h3>📚 Ringkasan Mingguan</h3><div class="summary" id="summary"></div></section><section class="aside tip"><h3>💡 Tips hari ini</h3><p><b style="color:#e7e3ff">Persiapan kecil, hasil besar.</b><br>Siapkan buku sebelum tidur, pasang alarm, datang tepat waktu, dan jangan lupa minum air.</p></section></aside></div>
+<footer class="footer">Dibuat untuk menemani perjalanan belajarmu · <span>Keep learning, keep growing ✦</span></footer></div>
+<script>
+const order=['Senin','Selasa','Rabu','Kamis','Jumat'], icons=['🌙','⚡','🎨','🚀','🌈'], colors=['#8b7cff','#53e5d5','#ff83bc','#ffb86b'];
+let data={}, selected=0;
+const mins=t=>{const a=t.split(':').map(Number);return a[0]*60+a[1]};
+function todayIndex(){const d=new Date().getDay()-1;return d>=0&&d<5?d:0}
+function renderTabs(){document.getElementById('tabs').innerHTML=order.map((d,i)=>`<button class="tab" data-i="${i}"><b>${d}</b><small>${['MON','TUE','WED','THU','FRI'][i]}</small></button>`).join('');document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>renderDay(+b.dataset.i))}
+function renderDay(i){selected=i;document.querySelectorAll('.tab').forEach((b,j)=>b.classList.toggle('active',j===i));const day=order[i], lessons=data[day]||[];document.getElementById('daytitle').textContent=icons[i]+' '+day;document.getElementById('count').textContent=lessons.length+' mata pelajaran';const n=new Date(), isToday=n.getDay()===i+1, cur=n.getHours()*60+n.getMinutes();
+document.getElementById('lessons').className='';document.getElementById('lessons').innerHTML=lessons.length?lessons.map((l,j)=>{const active=isToday&&cur>=mins(l.start)&&cur<mins(l.end);return `<article class="lesson ${active?'current':''}"><div class="time"><b>${l.start} – ${l.end}</b>${Math.floor((mins(l.end)-mins(l.start))/60)}j ${(mins(l.end)-mins(l.start))%60?((mins(l.end)-mins(l.start))%60)+'m':''}</div><div class="stripe" style="--c:${colors[j%colors.length]}"></div><div class="subject">${esc(l.subject)}<small>${active?'● Sedang berlangsung':'Pelajaran ke-'+(j+1)}</small></div><div class="period">${active?'SEDANG KELAS':'PELAJARAN '+(j+1)}</div></article>`}).join(''):'<div class="loading">Belum ada jadwal untuk hari ini.</div>';if(isToday)updateNext(i,cur);else{document.getElementById('nextlabel').textContent='✨ Jadwal pilihan';document.getElementById('nextsubject').textContent='Jadwal hari '+day;document.getElementById('nexttime').textContent=lessons.length+' mata pelajaran terjadwal'}}
+function updateNext(i,cur){const ls=data[order[i]]||[], active=ls.find(l=>cur>=mins(l.start)&&cur<mins(l.end)), next=ls.find(l=>cur<mins(l.start));if(active){nextlabel.textContent='🔥 Sedang berlangsung';nextsubject.textContent=active.subject;nexttime.textContent='Selesai pukul '+active.end}else if(next){nextlabel.textContent='⏭️ Pelajaran berikutnya';nextsubject.textContent=next.subject;nexttime.textContent='Mulai pukul '+next.start}else{nextlabel.textContent='🎉 Jadwal hari ini selesai';nextsubject.textContent='Waktunya istirahat!';nexttime.textContent='Sampai jumpa di kelas berikutnya.'}}
+function tick(){const n=new Date();clock.textContent=n.toLocaleTimeString('id-ID',{hour12:false});date.textContent=n.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'});today.textContent=n.getDay()>0&&n.getDay()<6?'● Hari ini: '+order[n.getDay()-1]:'✦ Selamat berakhir pekan';if(n.getDay()>0&&n.getDay()<6&&selected===n.getDay()-1)renderDay(selected)}
+function renderSummary(){summary.innerHTML=order.map((d,i)=>{const ls=data[d]||[], total=ls.reduce((s,l)=>s+mins(l.end)-mins(l.start),0);return `<div class="sumrow"><div class="ico">${icons[i]}</div><div class="sumtxt"><b>${d}</b><small>${ls.length} pelajaran · ${Math.floor(total/60)} jam ${total%60?total%60+' menit':''}</small></div><div class="num">${ls.length}</div></div>`}).join('')}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+// Jadwal disimpan langsung di HTML — tidak menggunakan Google Sheets.
+data = {
+  'Senin': [
+    {subject:'Sejarah', start:'07:30', end:'08:50'},
+    {subject:'PKN', start:'08:50', end:'10:40'},
+    {subject:'B. Indonesia', start:'10:40', end:'13:50'}
+  ],
+  'Selasa': [
+    {subject:'DDK', start:'07:10', end:'11:00'},
+    {subject:'PAI', start:'11:00', end:'11:30'},
+    {subject:'KKA', start:'11:30', end:'14:50'}
+  ],
+  'Rabu': [
+    {subject:'Informatika', start:'07:50', end:'09:50'},
+    {subject:'Seni', start:'10:20', end:'11:40'},
+    {subject:'Jasmani', start:'11:40', end:'14:10'}
+  ],
+  'Kamis': [
+    {subject:'MTK', start:'07:10', end:'08:30'},
+    {subject:'B. Inggris', start:'08:30', end:'11:00'},
+    {subject:'IPAS', start:'11:00', end:'14:50'}
+  ],
+  'Jumat': [
+    {subject:'DDK', start:'09:40', end:'15:40'}
+  ]
+};
+
+renderTabs();
+renderSummary();
+renderDay(todayIndex());
+tick();
+setInterval(tick, 1000);
+</script>
+<script>
+// Motion enhancements: click sparkles, ripple feedback, and smooth day-change transition.
+(function(){
+  const layer=document.createElement('div'); layer.id='floating-sparkles'; document.body.appendChild(layer);
+  const flash=document.createElement('div'); flash.id='transition-flash'; document.body.appendChild(flash);
+  function sparkle(x,y){
+    const el=document.createElement('span'); el.className='sparkle';
+    el.textContent=['✦','✧','✳','·','♡'][Math.floor(Math.random()*5)];
+    el.style.setProperty('--x',x+'px'); el.style.setProperty('--y',y+'px');
+    el.style.setProperty('--size',(10+Math.random()*17)+'px');
+    el.style.setProperty('--spark-color',['#53e5d5','#a69bff','#ff83bc','#ffffff'][Math.floor(Math.random()*4)]);
+    layer.appendChild(el); setTimeout(()=>el.remove(),850);
+  }
+  document.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='touch'||e.pointerType==='mouse'){
+      for(let i=0;i<4;i++) setTimeout(()=>sparkle(e.clientX+(Math.random()-0.5)*32,e.clientY+(Math.random()-0.5)*32),i*35);
+      const target=e.target.closest('button,.card,.lesson,.next');
+      if(target){
+        const r=document.createElement('span');r.className='ripple';
+        const rect=target.getBoundingClientRect(), size=Math.max(rect.width,rect.height)*1.7;
+        r.style.width=r.style.height=size+'px';r.style.left=(e.clientX-rect.left-size/2)+'px';r.style.top=(e.clientY-rect.top-size/2)+'px';
+        target.appendChild(r);setTimeout(()=>r.remove(),700);
+      }
+    }
+  },{passive:true});
+  // Smooth transition when switching days; schedule data and times remain unchanged.
+  const tabs=document.getElementById('tabs');
+  if(tabs){tabs.addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;
+    flash.style.setProperty('--x',e.clientX+'px');flash.style.setProperty('--y',e.clientY+'px');
+    flash.animate([{opacity:0},{opacity:.75},{opacity:0}],{duration:520,easing:'ease-out'});
+    const list=document.getElementById('lessons'); if(list){list.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:430,easing:'ease-in-out'});}
+  });}
+  // Tiny ambient stars occasionally drift across the page without blocking controls.
+  setInterval(()=>{if(document.hidden)return;const x=10+Math.random()*(window.innerWidth-20),y=window.innerHeight-10; sparkle(x,y);},1800);
+})();
+</script>
+
+</body></html>
