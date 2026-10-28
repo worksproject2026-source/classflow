@@ -216,6 +216,18 @@ body{background-attachment:fixed}
 @keyframes rippleExpand{to{transform:scale(1);opacity:0}}
 @media(prefers-reduced-motion:reduce){#intro-screen,.intro-title,.intro-subtitle,.brand .logo::after,.hero .card::before,.schedule::before,.aside::before,.head h2::after,.tab.active::before,.next::after{animation:none!important}.wrap{opacity:1!important;transform:none!important}}
 
+
+/* ===== ADMIN CATATAN HARIAN + ICON JADWAL ===== */
+.brand-icon-img{width:38px;height:38px;object-fit:contain;border-radius:12px;margin-right:8px;vertical-align:middle;filter:drop-shadow(0 0 12px #53e5d555)}
+.admin-trigger{border:1px solid var(--line);background:#ffffff0b;color:var(--text);border-radius:12px;padding:10px 13px;font:inherit;font-size:12px;cursor:pointer;transition:transform .25s,background .25s,border-color .25s}
+.admin-trigger:hover{transform:translateY(-2px);background:#8b7cff25;border-color:#a69bff}
+.clock-card .daily-note{margin:0 0 18px;padding:16px;border-radius:17px}.clock-card .daily-note h3{font-size:15px}.clock-card .daily-note-content{font-size:13px}.daily-note{margin-top:17px;border:1px solid #53e5d544;background:linear-gradient(135deg,#53e5d511,#8b7cff12);border-radius:22px;padding:22px;position:relative;overflow:hidden}
+.daily-note:before{content:'✦';position:absolute;right:20px;top:10px;font-size:42px;color:#ffffff12;animation:starOrbit 12s linear infinite}
+.daily-note h3{margin:0 0 8px}.daily-note .note-date{font-size:11px;color:var(--cyan);margin-bottom:10px}.daily-note-content{white-space:pre-wrap;line-height:1.7;color:#e8eaff;font-size:14px}
+.admin-panel{display:none;margin-top:16px;border:1px solid #a69bff70;background:#11172eeF;border-radius:20px;padding:20px;animation:cardReveal .45s ease both}
+.admin-panel.open{display:block}.admin-panel h3{margin:0 0 8px}.admin-panel label{display:block;font-size:12px;color:#cbd0ee;margin:13px 0 7px}.admin-panel input,.admin-panel textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:12px;background:#080d20;color:white;font:inherit;outline:none}.admin-panel textarea{min-height:120px;resize:vertical}.admin-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.admin-actions button{border:0;border-radius:11px;padding:10px 14px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}.save-note{background:linear-gradient(135deg,var(--accent),var(--cyan));color:#10152b}.clear-note{background:#ffffff12;color:white;border:1px solid var(--line)!important}.admin-hint{font-size:11px;color:var(--muted);margin-top:10px}
+@media(max-width:500px){.top{align-items:flex-start;flex-wrap:wrap}.admin-trigger{margin-left:auto}.daily-note,.admin-panel{padding:16px}}
+
 </style>
 </head>
 <body>
@@ -223,20 +235,22 @@ body{background-attachment:fixed}
   <div id="intro-screen">
     <div class="intro-glow"></div>
     <div class="intro-particles" aria-hidden="true"><i>✦</i><i>✧</i><i>·</i><i>✦</i><i>✧</i><i>·</i><i>✦</i><i>✧</i></div>
-    <div class="intro-logo">📚</div>
+    <div class="intro-logo"><img src="https://iili.io/CiMuwqN.png" alt="Ikon Jadwal Pelajaran" style="width:62px;height:62px;object-fit:contain"></div>
     <div class="intro-title">ClassFlow</div>
     <div class="intro-subtitle">JADWAL PELAJARAN DIGITAL</div>
     <div class="intro-loader"></div>
   </div>
 
   <div class="wrap">
-<header class="top"><div class="brand"><span class="logo">✦</span>ClassFlow<span style="color:var(--cyan)">.</span></div><div class="tag">✧ YOUR DIGITAL CLASSROOM</div></header>
+<header class="top"><div class="brand"><img class="brand-icon-img" src="https://iili.io/CiMuwqN.png" alt="Ikon Jadwal Pelajaran">ClassFlow<span style="color:var(--cyan)">.</span></div><button class="admin-trigger" id="adminToggle" type="button">✍️ Admin Catatan</button><div class="tag">✧ YOUR DIGITAL CLASSROOM</div></header>
 <section class="hero"><div class="card"><div class="eyebrow">● Belajar lebih teratur</div><h1>Atur hari,<br><span>raih prestasi.</span></h1><p>Semua jadwal pelajaranmu dalam satu tempat. Pilih hari, cek jam pelajaran, dan siap menghadapi kelas dengan percaya diri!</p></div>
-<div class="card"><div style="color:var(--muted);font-size:13px">Waktu sekarang</div><div class="clock" id="clock">00:00:00</div><div id="date" style="font-size:13px;color:#d9ddfa"></div><div class="next"><small id="nextlabel">✨ Pengingat hari ini</small><strong id="nextsubject">Memuat jadwal...</strong><span id="nexttime">Tunggu sebentar</span></div></div></section>
+<div class="card clock-card"><section class="daily-note" aria-live="polite"><h3>📝 Catatan & Motivasi Harian</h3><div class="note-date" id="noteDate">PESAN HARI INI</div><div class="daily-note-content" id="dailyNoteContent">Setiap langkah kecil hari ini adalah bagian dari kesuksesanmu di masa depan. Tetap semangat, X TKJ 1! ✨</div></section><div style="color:var(--muted);font-size:13px">Waktu sekarang</div><div class="clock" id="clock">00:00:00</div><div id="date" style="font-size:13px;color:#d9ddfa"></div><div class="next"><small id="nextlabel">✨ Pengingat hari ini</small><strong id="nextsubject">Memuat jadwal...</strong><span id="nexttime">Tunggu sebentar</span></div></div></section>
 <div class="head"><div><h2>Jadwal Mapel Kelas X TKJ 1</h2><p>Pilih hari untuk melihat daftar kelasmu.</p></div><div class="chip" id="today">● Hari ini</div></div>
 <nav class="tabs" id="tabs"></nav>
 <div class="main"><section class="schedule"><div class="panelhead"><h3 id="daytitle">Senin</h3><span id="count"></span></div><div id="lessons" class="loading">Pilih hari untuk melihat jadwal pelajaran.</div></section>
 <aside><section class="aside"><h3>📚 Ringkasan Mingguan</h3><div class="summary" id="summary"></div></section><section class="aside tip"><h3>💡 Tips hari ini</h3><p><b style="color:#e7e3ff">Persiapan kecil, hasil besar.</b><br>Siapkan buku sebelum tidur, pasang alarm, datang tepat waktu, dan jangan lupa minum air.</p></section></aside></div>
+
+<section class="admin-panel" id="adminPanel"><h3>✍️ Admin — Catatan Harian</h3><p style="font-size:12px;margin:0">Tulis motivasi, pengumuman, atau catatan untuk ditampilkan di halaman utama.</p><label for="noteTitle">Judul catatan</label><input id="noteTitle" maxlength="80" placeholder="Contoh: Semangat Hari Senin!"><label for="noteText">Isi catatan / motivasi</label><textarea id="noteText" maxlength="1500" placeholder="Tuliskan motivasi atau catatan harian di sini..."></textarea><div class="admin-actions"><button class="save-note" id="saveNote" type="button">💾 Simpan Catatan</button><button class="clear-note" id="clearNote" type="button">↺ Hapus Catatan</button></div><div class="admin-hint">Catatan tersimpan di browser/perangkat ini (localStorage). Karena website memakai GitHub Pages tanpa backend, catatan tidak otomatis tersinkron ke perangkat pengunjung lain. Panel ini bukan sistem login yang aman.</div></section>
 <footer class="footer">Dibuat untuk menemani perjalanan belajarmu · <span>Keep learning, keep growing ✦</span></footer></div>
 <script>
 const order=['Senin','Selasa','Rabu','Kamis','Jumat'], icons=['🌙','⚡','🎨','🚀','🌈'], colors=['#8b7cff','#53e5d5','#ff83bc','#ffb86b'];
@@ -317,6 +331,24 @@ setInterval(tick, 1000);
   });}
   // Tiny ambient stars occasionally drift across the page without blocking controls.
   setInterval(()=>{if(document.hidden)return;const x=10+Math.random()*(window.innerWidth-20),y=window.innerHeight-10; sparkle(x,y);},1800);
+})();
+</script>
+
+
+<script>
+// Admin catatan harian: penyimpanan lokal di browser, tanpa backend.
+(function(){
+ const KEY='classflow_daily_note_v1';
+ const panel=document.getElementById('adminPanel'),toggle=document.getElementById('adminToggle');
+ const titleInput=document.getElementById('noteTitle'),textInput=document.getElementById('noteText');
+ const display=document.getElementById('dailyNoteContent'),dateDisplay=document.getElementById('noteDate');
+ function todayLabel(){return new Date().toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).toUpperCase()}
+ function showNote(note){dateDisplay.textContent=(note&&note.title?note.title+' · ':'')+todayLabel();display.textContent=note&&note.text?note.text:'Setiap langkah kecil hari ini adalah bagian dari kesuksesanmu di masa depan. Tetap semangat, X TKJ 1! ✨'}
+ function load(){try{const n=JSON.parse(localStorage.getItem(KEY)||'null');if(n){titleInput.value=n.title||'';textInput.value=n.text||''}showNote(n)}catch(e){showNote(null)}}
+ toggle.addEventListener('click',()=>{panel.classList.toggle('open');if(panel.classList.contains('open')){panel.scrollIntoView({behavior:'smooth',block:'nearest'});titleInput.focus()}});
+ document.getElementById('saveNote').addEventListener('click',()=>{const note={title:titleInput.value.trim(),text:textInput.value.trim(),updatedAt:new Date().toISOString()};if(!note.text){alert('Isi catatan terlebih dahulu.');textInput.focus();return}try{localStorage.setItem(KEY,JSON.stringify(note));showNote(note);alert('Catatan berhasil disimpan di browser ini.')}catch(e){alert('Catatan tidak bisa disimpan oleh browser ini.')}});
+ document.getElementById('clearNote').addEventListener('click',()=>{if(!confirm('Hapus catatan tersimpan dan kembali ke motivasi bawaan?'))return;localStorage.removeItem(KEY);titleInput.value='';textInput.value='';showNote(null)});
+ load();
 })();
 </script>
 
